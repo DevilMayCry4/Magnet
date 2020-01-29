@@ -5,13 +5,6 @@
 'use strict';
 var urlRegex = /^https?:\/\/(?:[^./?#]+\.)?javbus\.com/;
 
-chrome.runtime.onMessage.addListener(
-        
-    function(request, sender, sendResponse) {
-      if (request.code == "getUrl")
-        {console.log(request.data);}
-        console.log(request.code);
-});
 
 chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
@@ -24,17 +17,12 @@ chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
   });
 
 
+  chrome.runtime.onMessage.addListener(function(message,sender,senderResponse) {
+      console.log("get message");
+    if (message && message.type == 'sendURL') {
+       window.data = message.data;
+    }else if (message && message.type == 'copy') {
+        senderResponse(window.data);
+     }
 
-
-function doStuffWithDom(domContent) {
-    console.log('I received the following DOM content:\n' + domContent);
-}
-
-
-  chrome.browserAction.onClicked.addListener(function (tab) {
-    // ...check the URL of the active tab against our pattern and...
-    if (urlRegex.test(tab.url)) {
-        // ...if it matches, send a message specifying a callback too
-        chrome.tabs.sendMessage(tab.id, {text: 'report_back'}, doStuffWithDom);
-    }
 });

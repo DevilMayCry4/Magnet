@@ -1,0 +1,6 @@
+li.small
+{
+    font-size: x-small;
+    word-break:break-all;
+    word-wrap:break-word;
+}
