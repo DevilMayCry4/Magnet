@@ -23,6 +23,7 @@ chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
        window.data = message.data;
     }else if (message && message.type == 'copy') {
         senderResponse(window.data);
+        window.data = null;
      }
 
 });

@@ -27,6 +27,7 @@ $(document).ready(function () {
     chrome.runtime.sendMessage({
         type: 'copy',
     },function(response) {
+        if(response == null)return;
         let string = "";
         let pasteText = "";
         response.forEach(function(item) {
